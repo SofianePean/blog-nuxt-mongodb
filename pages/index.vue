@@ -1,12 +1,16 @@
 <template>
-  <LastArticle v-bind:lastArticle="this.lastArticle"/>
+  <div>
+    <LastArticle v-bind:lastArticle="this.lastArticle" />
+    <NewPosts :newPosts="newPosts" />
+  </div>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      lastArticle: null
+      lastArticle: null,
+      newPosts: []
     };
   },
   methods: {
@@ -15,10 +19,18 @@ export default {
         "https://blogtestmongodb.herokuapp.com/lastarticle"
       );
       this.lastArticle = lastArticle;
+    },
+    async fetchNewPosts() {
+      const newPosts = await this.$axios.$get(
+        "https://blogtestmongodb.herokuapp.com/post"
+      );
+      newPosts.pop()
+      this.newPosts = newPosts;
     }
   },
   mounted() {
     this.fetchLastArticle();
+    this.fetchNewPosts();
   }
 };
 </script>

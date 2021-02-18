@@ -1,14 +1,18 @@
 <template>
   <article class="lastArticle" v-if="lastArticle">
-
     <img
       :src="lastArticle.img"
       alt="image dernier article"
       class="img-lastArticle"
     />
     <div class="container-text">
-      <NuxtLink to="/" class="link-category" :style="{'background-color' :lastArticle.category[0].color}">{{lastArticle.category[0].name}}</NuxtLink>
-      <h1>{{lastArticle.title}}</h1>
+      <NuxtLink
+        to="/"
+        class="link-category"
+        :style="{ 'background-color': lastArticle.category[0].color }"
+        >{{ lastArticle.category[0].name }}</NuxtLink
+      >
+      <h1>{{ lastArticle.title }}</h1>
     </div>
   </article>
 </template>
@@ -28,6 +32,7 @@ export default {
 }
 .img-lastArticle {
   width: 80%;
+  object-fit: cover;
   height: 400px;
 }
 .container-text {
