@@ -1,7 +1,7 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'blog',
+    title: 'Feel Good',
     htmlAttrs: {
       lang: 'fr'
     },
@@ -21,6 +21,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    { mode: 'client', src: '~/plugins/vue-burger-menu' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -35,8 +36,12 @@ export default {
   modules: [
     '@nuxtjs/axios',
   ],
+  router: {
+    middleware: ['mobile']
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    // vendor: ['vue-burger-menu'],
   }
 }

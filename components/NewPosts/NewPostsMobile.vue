@@ -1,8 +1,8 @@
 <template>
   <NuxtLink to="/">
-    <article class="lastArticle" v-if="lastArticle">
+    <article class="lastArticle" v-for="newPost in newPosts" :key="newPost._id">
       <img
-        :src="lastArticle.img"
+        :src="newPost.img"
         alt="image dernier article"
         class="img-lastArticle"
       />
@@ -14,17 +14,17 @@
           <NuxtLink
             to="/"
             class="link-category"
-            :style="{ 'background-color': lastArticle.category[0].color }"
-            >{{ lastArticle.category[0].name }}</NuxtLink
+            :style="{ 'background-color': newPost.category[0].color }"
+            >{{ newPost.category[0].name }}</NuxtLink
           >
         </div>
-        <h2 class="title-lastArticle">{{ lastArticle.title }}</h2>
+        <h2 class="title-lastArticle">{{ newPost.title }}</h2>
         <p class="content-lastArticle">
-          {{ lastArticle.content }}
+          {{ newPost.content }}
         </p>
         <div class="info">
-          <span class="author">{{ lastArticle.author.username }}</span>
-          <span class="author">{{ lastArticle.time }} mins</span>
+          <span class="author">{{ newPost.author.username }}</span>
+          <span class="author">{{ newPost.time }} mins</span>
         </div>
       </div>
     </article>
@@ -37,6 +37,9 @@ export default {
   computed: {
     isMobile() {
       return this.$store.state.home.isMobile;
+    },
+    newPosts() {
+      return this.$store.state.home.newPosts;
     }
   }
 };
@@ -45,10 +48,10 @@ export default {
 <style scoped>
 .lastArticle {
   display: flex;
-  width: 100%;
+  width: 90%;
   height: 400px;
   position: relative;
-  margin: 0 auto;
+  margin: 10px auto;
 }
 .img-lastArticle {
   width: 100%;
