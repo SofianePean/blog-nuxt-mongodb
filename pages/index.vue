@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <LastArticle />
-    <h1 class="title">Nouveaux articles</h1>
+    <h1 class="title" :style="[isMobile ? {margin: '15px auto', width: '90%'}: {margin: '15px auto', width: '70%'}]">Nouveaux articles</h1>
     <NewPostsMobile v-if="isMobile === true" />
     <NewPosts v-else :newPosts="newPosts" />
   </div>
@@ -61,7 +61,7 @@ export default {
   background-color: #f3f3f3;
 }
 .title {
-  margin: 15px auto;
-  width: 90%;
+  font-family: 'Poppins';
+  
 }
 </style>

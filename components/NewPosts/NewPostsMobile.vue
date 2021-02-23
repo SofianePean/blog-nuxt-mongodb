@@ -1,34 +1,46 @@
 <template>
-  <NuxtLink to="/">
+  <div>
     <article class="lastArticle" v-for="newPost in newPosts" :key="newPost._id">
       <img
         :src="newPost.img"
         alt="image dernier article"
         class="img-lastArticle"
       />
-      <div
-        class="container-text"
-        :style="[isMobile ? { width: '100%', left: '0%' } : { width: '50%' }]"
+      <NuxtLink
+        v-if="newPosts"
+        :to="{
+          name: `article-name`,
+          params: { postId: newPost._id }
+        }"
       >
-        <div>
-          <NuxtLink
-            to="/"
-            class="link-category"
-            :style="{ 'background-color': newPost.category[0].color }"
-            >{{ newPost.category[0].name }}</NuxtLink
-          >
+        <div
+          class="container-text"
+          :style="[isMobile ? { width: '100%', left: '0%' } : { width: '50%' }]"
+        >
+          <div>
+            <NuxtLink
+              :to="{
+                path: `/articles/${newPost.category[0].name.toLowerCase()}`,
+                query: { categoryId: newPost.category[0]._id }
+              }"
+              class="link-category"
+              :style="{ 'background-color': newPost.category[0].color }"
+              >{{ newPost.category[0].name }}</NuxtLink
+            >
+          </div>
+          <h2 class="title-lastArticle">{{ newPost.title }}</h2>
+          <p class="content-lastArticle">
+            {{ newPost.content }}
+          </p>
+          <div class="info">
+            <span class="author">{{ newPost.author.username }}</span>
+            <span class="author">{{ newPost.time }} mins</span>
+          </div>
         </div>
-        <h2 class="title-lastArticle">{{ newPost.title }}</h2>
-        <p class="content-lastArticle">
-          {{ newPost.content }}
-        </p>
-        <div class="info">
-          <span class="author">{{ newPost.author.username }}</span>
-          <span class="author">{{ newPost.time }} mins</span>
-        </div>
-      </div>
+      </NuxtLink>
     </article>
-  </NuxtLink>
+
+  </div>
 </template>
 
 <script>
@@ -71,7 +83,7 @@ export default {
   left: 13%;
   height: 100%;
   width: 50%;
-  font-family: 'Poppins';
+  font-family: "Poppins";
 }
 .link-category {
   display: inline-block;
