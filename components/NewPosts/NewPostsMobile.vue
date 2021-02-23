@@ -63,7 +63,7 @@ export default {
   filter: none;
 }
 .container-text {
-  padding: 40px;
+  padding: 30px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -71,6 +71,7 @@ export default {
   left: 13%;
   height: 100%;
   width: 50%;
+  font-family: 'Poppins';
 }
 .link-category {
   display: inline-block;

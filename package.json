@@ -16,5 +16,11 @@
     "nuxt": "^2.14.12",
     "vue-burger-menu": "^2.0.5"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@aceforth/nuxt-optimized-images": "^1.4.0",
+    "@nuxtjs/google-fonts": "^1.2.0",
+    "imagemin-mozjpeg": "^9.0.0",
+    "imagemin-pngquant": "^9.0.1",
+    "imagemin-svgo": "^8.0.0"
+  }
 }

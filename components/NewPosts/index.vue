@@ -3,24 +3,31 @@
     <div class="container">
       <article class="post" v-for="newPost in newPosts" :key="newPost._id">
         <div class="img-container">
-          <img class="img" :src="newPost.img" alt="image de l'article" />
+          <NuxtLink
+            v-if="newPosts"
+            :to="{
+              name: `article-name`,
+              params: { postId: newPost._id }
+            }"
+          >
+            <img class="img" :src="newPost.img" alt="image de l'article" />
+          </NuxtLink>
         </div>
         <div class="content">
           <div>
             <NuxtLink
-              to="/"
+              :to="{
+                path: `/articles/${newPost.category[0].name.toLowerCase()}`,
+                query: { categoryId: newPost.category[0]._id }
+              }"
               class="nuxtlink"
               :style="{ 'background-color': newPost.category[0].color }"
               >{{ newPost.category[0].name.toUpperCase() }}</NuxtLink
             >
           </div>
-          <h2>Je suis un title</h2>
+          <h2>{{newPost.title}}</h2>
           <p class="text">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam
-            alias rem provident eius natus magni numquam, laudantium facere,
-            expedita iusto laboriosam mollitia vitae explicabo, perspiciatis
-            ipsa cumque perferendis esse commodi! Dolorum dolores incidunt
-            aperiam cum sit, amet saepe dolorem necessitatibus.
+            {{newPost.content}}
           </p>
           <div class="info">
             <p class="date">{{ parseDate(newPost.date) }}</p>
@@ -35,7 +42,6 @@
 
 <script>
 export default {
-  props: ["newPosts"],
   methods: {
     parseDate(date) {
       let postDate = new Date(date);
@@ -44,6 +50,11 @@ export default {
       const yyyy = postDate.getFullYear();
       postDate = dd + "/" + mm + "/" + yyyy;
       return postDate;
+    }
+  },
+  computed: {
+    newPosts() {
+      return this.$store.state.home.newPosts;
     }
   }
 };

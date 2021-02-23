@@ -5,18 +5,19 @@
         <img class="logo" src="~/assets/img/feel-good.png" alt="" />
       </NuxtLink>
     </div>
-    <div class="container-section" v-if="this.categories.length !== 0">
+    <div class="container-section" v-if="categories.length !== 0">
       <NuxtLink
+        v-for="category in categories"
         :to="{
           path: `/articles/${category.name.toLowerCase()}`,
           query: { categoryId: category._id }
         }"
         class="list-section"
-        v-for="category in categories"
         :key="category._id"
       >
         {{ category.name }}
       </NuxtLink>
+      <NuxtLink to="/" class="list-section">Connexion</NuxtLink>
     </div>
   </div>
 </template>
@@ -24,20 +25,23 @@
 <script>
 export default {
   data() {
-    return {
-      categories: []
-    };
+    return {};
   },
   methods: {
-    async fetchSomething() {
-      const category = await this.$axios.$get(
-        "https://blogtestmongodb.herokuapp.com/category"
-      );
-      this.categories = category;
-    }
+    // async fetchSomething() {
+    //   const category = await this.$axios.$get(
+    //     "https://blogtestmongodb.herokuapp.com/category"
+    //   );
+    //   this.$store.commit("home/saveCategories", category);
+    // }
   },
   mounted() {
-    this.fetchSomething();
+    // this.fetchSomething()
+  },
+  computed: {
+    categories() {
+      return this.$store.state.home.categories;
+    }
   }
 };
 </script>

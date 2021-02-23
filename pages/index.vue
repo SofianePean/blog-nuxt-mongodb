@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <LastArticle v-bind:lastArticle="this.lastArticle" />
+    <LastArticle />
     <h1 class="title">Nouveaux articles</h1>
     <NewPostsMobile v-if="isMobile === true" />
     <NewPosts v-else :newPosts="newPosts" />
@@ -9,25 +9,22 @@
 
 <script>
 export default {
-  layout(context) {
-    const isMobile = context.isMobile;
-    if (isMobile) {
-      return "mobile";
-    } else {
-      return "default";
-    }
-  },
+  layout: ({ isMobile }) => (isMobile ? "mobile" : "default"),
   data() {
     return {
-      lastArticle: null
     };
   },
+  loading: {
+    color: "blue",
+    height: "15px"
+  },
   methods: {
-    async fetchLastArticle() {
-      const lastArticle = await this.$axios.$get(
+    async fetchLastPost() {
+      const lastPost = await this.$axios.$get(
         "https://blogtestmongodb.herokuapp.com/lastarticle"
       );
-      this.lastArticle = lastArticle;
+      console.log(lastPost)
+      this.$store.commit("home/saveLastPost", lastPost);
     },
     async fetchNewPosts(context) {
       const newPosts = await this.$axios.$get(
@@ -35,12 +32,18 @@ export default {
       );
       newPosts.pop();
       this.$store.commit("home/saveNewPosts", newPosts);
-      // this.newPosts = newPosts;
+    },
+    async fetchSomething() {
+      const category = await this.$axios.$get(
+        "https://blogtestmongodb.herokuapp.com/category"
+      );
+      this.$store.commit("home/saveCategories", category);
     }
   },
   mounted() {
-    this.fetchLastArticle();
+    this.fetchLastPost();
     this.fetchNewPosts();
+    this.fetchSomething();
   },
   computed: {
     newPosts() {
@@ -48,7 +51,7 @@ export default {
     },
     isMobile() {
       return this.$store.state.home.isMobile;
-    }
+    },
   }
 };
 </script>
@@ -56,5 +59,9 @@ export default {
 <style>
 .page {
   background-color: #f3f3f3;
+}
+.title {
+  margin: 15px auto;
+  width: 90%;
 }
 </style>

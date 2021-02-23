@@ -1,8 +1,14 @@
 <template>
-  <NuxtLink to="/">
-    <article class="lastArticle" v-if="lastArticle">
+  <NuxtLink
+    v-if="lastPost"
+    :to="{
+      name: `article-name`,
+      params: { postId: lastPost._id },
+    }"
+  >
+    <article class="lastArticle" v-if="lastPost">
       <img
-        :src="lastArticle.img"
+        :src="lastPost.img"
         alt="image dernier article"
         class="img-lastArticle"
       />
@@ -14,17 +20,17 @@
           <NuxtLink
             to="/"
             class="link-category"
-            :style="{ 'background-color': lastArticle.category[0].color }"
-            >{{ lastArticle.category[0].name }}</NuxtLink
+            :style="{ 'background-color': lastPost.category[0].color }"
+            >{{ lastPost.category[0].name }}</NuxtLink
           >
         </div>
-        <h2 class="title-lastArticle">{{ lastArticle.title }}</h2>
+        <h2 class="title-lastArticle">{{ lastPost.title }}</h2>
         <p class="content-lastArticle">
-          {{ lastArticle.content }}
+          {{ lastPost.content }}
         </p>
         <div class="info">
-          <span class="author">{{ lastArticle.author.username }}</span>
-          <span class="author">{{ lastArticle.time }} mins</span>
+          <span class="author">{{ lastPost.author.username }}</span>
+          <span class="author">{{ lastPost.time }} mins</span>
         </div>
       </div>
     </article>
@@ -33,10 +39,13 @@
 
 <script>
 export default {
-  props: ["lastArticle"],
+  // props: ["lastPost"],
   computed: {
     isMobile() {
       return this.$store.state.home.isMobile;
+    },
+    lastPost() {
+      return this.$store.state.home.lastPost;
     }
   }
 };
@@ -60,7 +69,7 @@ export default {
   filter: none;
 }
 .container-text {
-  padding: 40px;
+  padding: 25px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -68,6 +77,7 @@ export default {
   left: 13%;
   height: 100%;
   width: 50%;
+  font-family: "Poppins";
 }
 .link-category {
   display: inline-block;
