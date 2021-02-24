@@ -39,7 +39,7 @@
               </span>
               <span class="author">
                 <font-awesome-icon class="icon" :icon="['fas', 'eye']" />
-                lectures
+                100 lectures
               </span>
               <span class="author">
                 <font-awesome-icon class="icon" :icon="['fas', 'clock']" />{{
