@@ -8,7 +8,12 @@
 
 <style>
 .header {
-  height: 100px;
+  height: 80px;
+  position: fixed;
+  width: 100%;
+  z-index: 3;
+  background-color: #fff;
+  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.1);
 }
 html {
   font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",

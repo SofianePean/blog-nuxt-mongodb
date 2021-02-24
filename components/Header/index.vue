@@ -28,15 +28,15 @@ export default {
     return {};
   },
   methods: {
-    // async fetchSomething() {
-    //   const category = await this.$axios.$get(
-    //     "https://blogtestmongodb.herokuapp.com/category"
-    //   );
-    //   this.$store.commit("home/saveCategories", category);
-    // }
+    async fetchSomething() {
+      const category = await this.$axios.$get(
+        "https://blogtestmongodb.herokuapp.com/category"
+      );
+      this.$store.commit("home/saveCategories", category);
+    }
   },
   mounted() {
-    // this.fetchSomething()
+    this.fetchSomething()
   },
   computed: {
     categories() {
@@ -51,15 +51,15 @@ export default {
   display: flex;
   justify-content: space-between;
   padding: 20px 40px;
-  height: 140px;
+  height: 100px;
 }
 .container-logo {
   display: flex;
   align-items: center;
 }
 .logo {
-  height: 120px;
-  width: 120px;
+  height: 100px;
+  width: 100px;
 }
 .container-section {
   display: flex;

@@ -19,14 +19,19 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { mode: "client", src: "~/plugins/vue-burger-menu" },
-    { src: '~/plugins/vuex-persist', mode: "client" }
+    // { src: "~/plugins/vuex-persist", mode: "client" }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: ["@nuxtjs/google-fonts", "@aceforth/nuxt-optimized-images"],
+  buildModules: [
+    "@nuxtjs/google-fonts",
+    "@aceforth/nuxt-optimized-images",
+    "@nuxtjs/ngrok",
+    "@nuxtjs/fontawesome"
+  ],
 
   googleFonts: {
     families: {
@@ -40,8 +45,20 @@ export default {
     optimizeImages: true
   },
 
+  ngrok: {
+    authtoken: process.env.NGROK_TOKEN,
+    // Optionnel, seulement si vous souhaitez limiter l'accès avec un utilisateur / mot de passe
+    // auth: process.env.NGROK_AUTH
+  },
+  fontawesome: {
+    icons: {
+      solid: true,
+      brands: true
+    }
+  },
+
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ["@nuxtjs/axios"],
+  modules: ["@nuxtjs/axios", "@nuxt/http"],
   router: {
     middleware: ["mobile"]
   },
@@ -49,5 +66,10 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     // vendor: ['vue-burger-menu'],
-  }
+  },
+
+  loading: {
+    color: "orange",
+    height: "8px"
+  },
 };

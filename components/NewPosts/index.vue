@@ -6,7 +6,7 @@
           <NuxtLink
             v-if="newPosts"
             :to="{
-              name: `article-name`,
+              path: `/post/${newPost.slug}`,
               params: { postId: newPost._id }
             }"
           >
@@ -17,7 +17,7 @@
           <div>
             <NuxtLink
               :to="{
-                path: `/articles/${newPost.category[0].name.toLowerCase()}`,
+                path: `/categoryPosts/${newPost.category[0].name.toLowerCase()}`,
                 query: { categoryId: newPost.category[0]._id }
               }"
               class="nuxtlink"
@@ -25,14 +25,29 @@
               >{{ newPost.category[0].name.toUpperCase() }}</NuxtLink
             >
           </div>
-          <h2>{{newPost.title}}</h2>
+          <h2>{{ newPost.title }}</h2>
           <p class="text">
-            {{newPost.content}}
+            {{ newPost.content }}
           </p>
           <div class="info">
-            <p class="date">{{ parseDate(newPost.date) }}</p>
-            <p class="author">{{ newPost.author.username }}</p>
-            <p class="counter-view">5 views</p>
+            <div class="info">
+              <span class="author">
+                <font-awesome-icon
+                  class="icon"
+                  :icon="['fas', 'user-circle']"
+                />{{ newPost.author.username }}
+              </span>
+              <span class="author">
+                <font-awesome-icon class="icon" :icon="['fas', 'eye']" />
+                lectures
+              </span>
+              <span class="author">
+                <font-awesome-icon class="icon" :icon="['fas', 'clock']" />{{
+                  newPost.time
+                }}
+                min de lecture
+              </span>
+            </div>
           </div>
         </div>
       </article>
@@ -70,6 +85,7 @@ export default {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+  padding-bottom: 20px;
 }
 .post {
   display: flex;
@@ -128,7 +144,14 @@ export default {
 }
 .info {
   display: flex;
+  flex-wrap: wrap;
   color: #818181;
   font-size: 0.8rem;
+}
+.author {
+  margin-right: 10px;
+}
+.icon {
+  margin-right: 3px;
 }
 </style>

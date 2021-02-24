@@ -2,8 +2,7 @@
   <NuxtLink
     v-if="lastPost"
     :to="{
-      name: `article-name`,
-      params: { postId: lastPost._id },
+      path: `/post/${lastPost.slug}`
     }"
   >
     <article class="lastArticle" v-if="lastPost">
@@ -18,7 +17,10 @@
       >
         <div>
           <NuxtLink
-            to="/"
+            :to="{
+              path: `/categoryPosts/${lastPost.category[0].name.toLowerCase()}`,
+              query: { categoryId: lastPost.category[0]._id }
+            }"
             class="link-category"
             :style="{ 'background-color': lastPost.category[0].color }"
             >{{ lastPost.category[0].name }}</NuxtLink
@@ -29,8 +31,21 @@
           {{ lastPost.content }}
         </p>
         <div class="info">
-          <span class="author">{{ lastPost.author.username }}</span>
-          <span class="author">{{ lastPost.time }} mins</span>
+          <span class="author">
+            <font-awesome-icon class="icon" :icon="['fas', 'user-circle']" />{{
+              lastPost.author.username
+            }}
+          </span>
+          <span class="author">
+            <font-awesome-icon class="icon" :icon="['fas', 'eye']" />
+             100 lectures
+          </span>
+          <span class="author">
+            <font-awesome-icon class="icon" :icon="['fas', 'clock']" />{{
+              lastPost.time
+            }}
+            min de lecture
+          </span>
         </div>
       </div>
     </article>
@@ -39,7 +54,6 @@
 
 <script>
 export default {
-  // props: ["lastPost"],
   computed: {
     isMobile() {
       return this.$store.state.home.isMobile;
@@ -92,11 +106,17 @@ export default {
 .content-lastArticle {
   color: white;
   font-weight: bold;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .title-lastArticle {
   color: white;
 }
 .author {
   color: white;
+  margin-right: 10px;
+}
+.icon {
+  margin-right: 2px;
 }
 </style>

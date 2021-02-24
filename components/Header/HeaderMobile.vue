@@ -2,12 +2,12 @@
   <div>
     <div class="container-logo">
       <NuxtLink to="/">
-        <img class="logo" src="~/assets/img/feel-good.png" alt="" />
+        <img class="logo" src="~/assets/img/feel-good.png" alt="logo site" />
       </NuxtLink>
     </div>
     <div class="container-menu">
       <client-only>
-        <Slide right :closeOnNavigation="true">
+        <Slide right :closeOnNavigation="true" width="300">
           <NuxtLink
             :to="{
               path: `/articles/${category.name.toLowerCase()}`,
@@ -31,6 +31,17 @@ export default {
   data() {
     return {};
   },
+  methods: {
+    async fetchSomething() {
+      const category = await this.$axios.$get(
+        "https://blogtestmongodb.herokuapp.com/category"
+      );
+      this.$store.commit("home/saveCategories", category);
+    }
+  },
+  mounted() {
+    this.fetchSomething();
+  },
   computed: {
     categories() {
       return this.$store.state.home.categories;
@@ -39,14 +50,17 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .container-logo {
   display: flex;
   align-items: center;
 }
 .logo {
-  height: 100px;
-  width: 100px;
+  height: 80px;
+  width: 80px;
+}
+.bm-burger-button {
+  top: 30px;
 }
 
 .list-section {
@@ -57,6 +71,6 @@ export default {
   font-weight: bold;
   margin: 0 10px 0 10px;
   color: inherit;
-  font-family: 'Poppins';
+  font-family: "Poppins";
 }
 </style>

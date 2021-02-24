@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <article class="lastArticle" v-for="newPost in newPosts" :key="newPost._id">
       <img
         :src="newPost.img"
@@ -9,7 +9,7 @@
       <NuxtLink
         v-if="newPosts"
         :to="{
-          name: `article-name`,
+          path: `/post/${newPost.slug}`,
           params: { postId: newPost._id }
         }"
       >
@@ -20,7 +20,7 @@
           <div>
             <NuxtLink
               :to="{
-                path: `/articles/${newPost.category[0].name.toLowerCase()}`,
+                path: `/categoryPosts/${newPost.category[0].name.toLowerCase()}`,
                 query: { categoryId: newPost.category[0]._id }
               }"
               class="link-category"
@@ -33,19 +33,31 @@
             {{ newPost.content }}
           </p>
           <div class="info">
-            <span class="author">{{ newPost.author.username }}</span>
-            <span class="author">{{ newPost.time }} mins</span>
+            <span class="author">
+              <font-awesome-icon
+                class="icon"
+                :icon="['fas', 'user-circle']"
+              />{{ newPost.author.username }}
+            </span>
+            <span class="author">
+              <font-awesome-icon class="icon" :icon="['fas', 'eye']" />
+              90 lectures
+            </span>
+            <span class="author">
+              <font-awesome-icon class="icon" :icon="['fas', 'clock']" />{{
+                newPost.time
+              }}
+              min de lecture
+            </span>
           </div>
         </div>
       </NuxtLink>
     </article>
-
   </div>
 </template>
 
 <script>
 export default {
-  props: ["lastArticle"],
   computed: {
     isMobile() {
       return this.$store.state.home.isMobile;
@@ -58,10 +70,13 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  padding-bottom: 20px;
+}
 .lastArticle {
   display: flex;
   width: 90%;
-  height: 400px;
+  height: 350px;
   position: relative;
   margin: 10px auto;
 }
@@ -104,5 +119,9 @@ export default {
 }
 .author {
   color: white;
+  margin-right: 17px;
+}
+.icon {
+  margin-right: 3px;
 }
 </style>
